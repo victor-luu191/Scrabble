@@ -1,4 +1,5 @@
 package main;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PrimitiveIterator.OfInt;
@@ -9,9 +10,9 @@ import java.util.stream.IntStream;
 
 public class Player {
 	
-	int order;
-	List<Tile> tiles_in_hand;
-	Random tileDrawer;
+	public int order;
+	public List<Tile> tiles_in_hand;
+	public Random tileDrawer;
 	
 	public Player(int order, List<Tile> tiles_in_hand) {
 		this.order = order;
@@ -26,7 +27,7 @@ public class Player {
 	 * (iii) put tiles in hand to certain cells on the board
 	 */
 	
-	public Set<Tile> drawFromBag(List<Tile> tiles_in_bag, int n) {
+	public List<Tile> drawFromBag(List<Tile> tiles_in_bag, int n) {
 		if (tiles_in_bag.size() < n) {
 			System.err.println("not enough tiles in bag for drawing");
 			return null;
@@ -34,7 +35,7 @@ public class Player {
 			IntStream indices = tileDrawer.ints(n, 0, tiles_in_bag.size());
 //			indices.map(i -> tiles_in_bag.get(i)); google way to do this correctly
 			
-			Set<Tile> drawnTiles = new HashSet<>();
+			List<Tile> drawnTiles = new ArrayList<>();
 			OfInt iter = indices.iterator();
 			while (iter.hasNext()) {
 				int index = iter.nextInt();
@@ -46,19 +47,24 @@ public class Player {
 	}
 	
 	// pre: tiles is a subset of tiles_in_hand
-	private void moveFromHandToBag(Set<Tile> tiles, List<Tile> tiles_in_bag) {
-		// TODO Auto-generated method stub
-		if (!tiles_in_hand.containsAll(tiles)) {
-			System.out.println("moving some tiles not in hand, sth wrong!");
+	public void moveFromHandToBag(List<Tile> tiles, List<Tile> tiles_in_bag) {
+
+		if (! isInHand(tiles)) {
+			System.err.println("moving some tiles not in hand, sth wrong!");
 		} else {
 			tiles_in_bag.addAll(tiles);
+			tiles_in_hand.removeAll(tiles);
 		}
+	}
+
+	private boolean isInHand(List<Tile> tiles) {
+		return tiles_in_hand.containsAll(tiles);
 	}
 	
 	// pre: the cell must be empty
 	void moveFromHand2Cell(Tile tile, Cell cell, BoardState boardState) {
 		if (!boardState.emptyCells.contains(cell)) {
-			System.out.println("The cell is occupied, cannot move!");
+			System.err.println("The cell is occupied, cannot move!");
 		} else {
 			tiles_in_hand.remove(tile);
 			CellWithTile occupied_cell = new CellWithTile(cell, tile);
@@ -94,9 +100,9 @@ public class Player {
 				boardState.emptyCells.containsAll(cells);
 	}
 	
-	void exchange(Set<Tile> tilesToExchange, List<Tile> tiles_in_bag) {
+	void exchange(List<Tile> tilesToExchange, List<Tile> tiles_in_bag) {
 		int n = tilesToExchange.size();
-		Set<Tile> drawnTiles = drawFromBag(tiles_in_bag, n);
+		List<Tile> drawnTiles = drawFromBag(tiles_in_bag, n);
 		if (drawnTiles == null) {
 			System.out.println("cannot exchange!");
 		} else {
