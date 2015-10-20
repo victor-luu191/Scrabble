@@ -24,7 +24,8 @@ public class Player {
 	 * Basic actions of a player 
 	 * (i) draw tiles from the bag
 	 * (ii) move tiles from hand into the bag
-	 * (iii) put tiles in hand to certain cells on the board
+	 * (iii) put tiles in hand to certain cells on the board. The cells must be on the same row
+	 * or column
 	 */
 	
 	public List<Tile> drawFromBag(List<Tile> tiles_in_bag, int n) {
