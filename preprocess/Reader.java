@@ -17,7 +17,7 @@ public class Reader {
 			original_dict.add(line);
 		}
 		br.close();
-		System.out.println("dictionary loaded");
+		System.out.println("Loaded a dictionary of size " + original_dict.size());
 		return original_dict;
 	}
 }
