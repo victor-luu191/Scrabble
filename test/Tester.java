@@ -61,11 +61,14 @@ public class Tester {
 			List<String> original_dict = Reader.readDict("words.txt");
 			Builder builder = new Builder();
 			builder.buildSortedDict(original_dict);
-			String str = "words";
+			String str = "eclipse";	// 
 			char[] letters = str.toCharArray(); 
 			
-			System.out.println("letters " + Arrays.toString(letters) + " can form following words");
-			System.out.println(builder.wordsCreatedBy(letters, original_dict));
+			System.out.println("below are all possible words form by letters in " + Arrays.toString(letters) );
+			Set<String> possibleWords = builder.allPossibleWords(letters, original_dict);
+			System.out.println(possibleWords);
+			System.out.println("Totally " + possibleWords.size() + " words.");
+			//			System.out.println(builder.wordsCreatedBy(letters, original_dict));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
