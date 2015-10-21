@@ -106,7 +106,7 @@ public class Builder {
 				}
 			}
 			// exclude trivial subgroups with only 1,2 letters
-			if (selected.length() > 2) {
+			if (isValid(selected)) {
 				char[] selected_letters = selected.toCharArray();
 				String sorted_form = sortLetters( selected_letters );
 				try {
@@ -120,6 +120,13 @@ public class Builder {
 		}
 		
 		return possible_words;
+	}
+	// valid = have more than 2 letters and contain a vowel
+	private boolean isValid(String selected) {
+		boolean contain_vowel = selected.contains("a") || selected.contains("e") || selected.contains("i") || 
+								selected.contains("o") || selected.contains("u");
+		
+		return (selected.length() > 2 && contain_vowel);
 	}
 
 	private String toBinary(int number, int full_length) {
