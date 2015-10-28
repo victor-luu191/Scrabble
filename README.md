@@ -21,5 +21,7 @@ So far the implementation can generate successfully all valid words using all le
 
 ## Next steps:
 + generate all valid words using all __subsets__ of a given group of letters
-+ compute scores of each possible move, here a move is defined as putting specific tiles into certain consecutive cells (of the same row or column)
++ compute scores of each valid move, here a valid move is defined as 
+  + putting specific tiles into consecutive cells of some row or column
+  + once put, the tiles (may be combined with some on-board tiles, as long as the combination is valid) must form a valid word in dictionary
 + choose the move with highest score
